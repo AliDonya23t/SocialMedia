@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,33 +16,37 @@ namespace SocialMedia.Controllers
     {
         private readonly DB_SocialContext _context;
 
-        public UsersController(DB_SocialContext context)
+        public UsersController(DB_SocialContext context) // ctor : adjust the context
         {
             _context = context;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
-            return await _context.Users.ToListAsync();
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers() // Select * from Users => List<User>
+        {// checked and updated as show the active users
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            return await _context.Users.Where(u => u.Is_Active == true).ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
-        {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
+        public async Task<ActionResult<User>> GetUser(string id) // select * from users where id == id => User
+        { // checked and updated as show only active users
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
+            {
+                return NotFound();
+            }
+            if (user.Is_Active == false)
             {
                 return NotFound();
             }
@@ -52,8 +57,8 @@ namespace SocialMedia.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, User user)
-        {
+        public async Task<IActionResult> UpdateUser(string id, User user) // Update Users set * = * where user.id == id => ActionResult
+        {// checked no update needed
             if (id != user.Id)
             {
                 return BadRequest();
@@ -83,12 +88,13 @@ namespace SocialMedia.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-          if (_context.Users == null)
-          {
-              return Problem("Entity set 'DB_SocialContext.Users'  is null.");
-          }
+        public async Task<ActionResult<User>> InsertUser(User user)//Insert into Users Values * => ActionResult
+        { // checked and updated as Is_Active should always be ture when inserting new user
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'DB_SocialContext.Users'  is null.");
+            }
+            user.Is_Active = true;
             _context.Users.Add(user);
             try
             {
@@ -111,8 +117,31 @@ namespace SocialMedia.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(string id) // delete from User where id == id => ActionResult
         {
+            User user = GetUser(id);
+
+            _context.Entry(user).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+
+            /**
             if (_context.Users == null)
             {
                 return NotFound();
@@ -127,6 +156,7 @@ namespace SocialMedia.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+            /**/
         }
 
         private bool UserExists(string id)

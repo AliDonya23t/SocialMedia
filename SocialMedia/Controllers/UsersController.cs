@@ -119,6 +119,10 @@ namespace SocialMedia.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id) // delete from User where id == id => ActionResult
         {
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
             User user = GetUser(id);
 
             _context.Entry(user).State = EntityState.Modified;

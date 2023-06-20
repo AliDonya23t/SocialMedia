@@ -7,9 +7,9 @@ namespace SocialMedia.Models;
 
 public partial class Page
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
-    public string UserId { get; set; }
+    public int UserId { get; set; }
 
     public bool Is_Active { get; set; }
 

@@ -33,7 +33,7 @@ namespace SocialMedia.Controllers
 
         // GET: api/Comments/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Comment>> GetComment(string id)
+        public async Task<ActionResult<Comment>> GetComment(int id)
         {
           if (_context.Comments == null)
           {
@@ -52,7 +52,7 @@ namespace SocialMedia.Controllers
         // PUT: api/Comments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComment(string id, Comment comment)
+        public async Task<IActionResult> PutComment(int id, Comment comment)
         {
             if (id != comment.Id)
             {
@@ -111,7 +111,7 @@ namespace SocialMedia.Controllers
 
         // DELETE: api/Comments/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComment(string id)
+        public async Task<IActionResult> DeleteComment(int id)
         {
             if (_context.Comments == null)
             {
@@ -129,7 +129,7 @@ namespace SocialMedia.Controllers
             return NoContent();
         }
 
-        private bool CommentExists(string id)
+        private bool CommentExists(int id)
         {
             return (_context.Comments?.Any(e => e.Id == id)).GetValueOrDefault();
         }

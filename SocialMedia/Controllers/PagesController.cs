@@ -33,7 +33,7 @@ namespace SocialMedia.Controllers
 
         // GET: api/Pages/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Page>> GetPage(string id)
+        public async Task<ActionResult<Page>> GetPage(int id)
         {
           if (_context.Pages == null)
           {
@@ -111,7 +111,7 @@ namespace SocialMedia.Controllers
 
         // DELETE: api/Pages/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePage(string id)
+        public async Task<IActionResult> DeletePage(int id)
         {
             if (_context.Pages == null)
             {

@@ -52,7 +52,7 @@ namespace SocialMedia.Controllers
         // PUT: api/Posts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPost(string id, Post post)
+        public async Task<IActionResult> PutPost(int id, Post post)
         {
             if (id != post.Id)
             {
@@ -129,7 +129,7 @@ namespace SocialMedia.Controllers
             return NoContent();
         }
 
-        private bool PostExists(string id)
+        private bool PostExists(int id)
         {
             return (_context.Posts?.Any(e => e.Id == id)).GetValueOrDefault();
         }

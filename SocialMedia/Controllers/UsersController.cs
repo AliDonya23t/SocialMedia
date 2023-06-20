@@ -57,7 +57,7 @@ namespace SocialMedia.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(string id, User user) // Update Users set * = * where user.id == id => ActionResult
+        public async Task<IActionResult> UpdateUser(int id, User user) // Update Users set * = * where user.id == id => ActionResult
         {// checked no update needed
             if (id != user.Id)
             {
@@ -117,7 +117,7 @@ namespace SocialMedia.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(string id) // delete from User where id == id => ActionResult
+        public async Task<IActionResult> DeleteUser(int id) // delete from User where id == id => ActionResult
         {
             if (_context.Users == null)
             {
@@ -168,7 +168,7 @@ namespace SocialMedia.Controllers
             /**/
         }
 
-        private bool UserExists(string id)
+        private bool UserExists(int id)
         {
             return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }

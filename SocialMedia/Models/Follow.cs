@@ -7,11 +7,11 @@ namespace SocialMedia.Models;
 
 public partial class Follow
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
-    public string PageId { get; set; }
+    public int PageId { get; set; }
 
-    public string FollowingId { get; set; }
+    public int FollowingId { get; set; }
 
     public virtual Page Following { get; set; }
 

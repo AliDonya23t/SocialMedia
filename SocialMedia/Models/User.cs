@@ -7,7 +7,7 @@ namespace SocialMedia.Models;
 
 public partial class User
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     public string Username { get; set; }
 

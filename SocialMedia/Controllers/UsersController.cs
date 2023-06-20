@@ -123,9 +123,14 @@ namespace SocialMedia.Controllers
             {
                 return NotFound();
             }
-            User user = GetUser(id);
-
-            _context.Entry(user).State = EntityState.Modified;
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            if (user == null)
+                return NotFound();
+            else
+            {
+                user.Is_Active = false;
+                _context.Entry(user).State = EntityState.Modified;
+            }
 
             try
             {

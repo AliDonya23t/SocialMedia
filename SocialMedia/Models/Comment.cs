@@ -7,13 +7,13 @@ namespace SocialMedia.Models;
 
 public partial class Comment
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
-    public string IdParent { get; set; }
+    public int? IdParent { get; set; }
 
     public string Text { get; set; }
 
-    public string IdPost { get; set; }
+    public int IdPost { get; set; }
 
     public virtual Comment IdParentNavigation { get; set; }
 

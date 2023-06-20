@@ -33,7 +33,7 @@ namespace SocialMedia.Controllers
 
         // GET: api/Follows/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Follow>> GetFollow(string id)
+        public async Task<ActionResult<Follow>> GetFollow(int id)
         {
           if (_context.Follows == null)
           {
@@ -52,7 +52,7 @@ namespace SocialMedia.Controllers
         // PUT: api/Follows/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFollow(string id, Follow follow)
+        public async Task<IActionResult> PutFollow(int id, Follow follow)
         {
             if (id != follow.Id)
             {
@@ -111,7 +111,7 @@ namespace SocialMedia.Controllers
 
         // DELETE: api/Follows/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFollow(string id)
+        public async Task<IActionResult> DeleteFollow(int id)
         {
             if (_context.Follows == null)
             {
@@ -129,7 +129,7 @@ namespace SocialMedia.Controllers
             return NoContent();
         }
 
-        private bool FollowExists(string id)
+        private bool FollowExists(int id)
         {
             return (_context.Follows?.Any(e => e.Id == id)).GetValueOrDefault();
         }

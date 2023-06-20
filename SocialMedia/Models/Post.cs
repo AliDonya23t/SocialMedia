@@ -7,7 +7,7 @@ namespace SocialMedia.Models;
 
 public partial class Post
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     public string MediaLink { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Post
 
     public bool Is_Active { get; set; }
 
-    public string PageId { get; set; }
+    public int PageId { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 

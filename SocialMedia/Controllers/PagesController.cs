@@ -52,7 +52,7 @@ namespace SocialMedia.Controllers
         // PUT: api/Pages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPage(string id, Page page)
+        public async Task<IActionResult> PutPage(int id, Page page)
         {
             if (id != page.Id)
             {
@@ -129,7 +129,7 @@ namespace SocialMedia.Controllers
             return NoContent();
         }
 
-        private bool PageExists(string id)
+        private bool PageExists(int id)
         {
             return (_context.Pages?.Any(e => e.Id == id)).GetValueOrDefault();
         }

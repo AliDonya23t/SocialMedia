@@ -27,16 +27,7 @@ public partial class DB_SocialContext : DbContext
     {
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.Property(e => e.Id)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.IdParent)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.IdPost)
-                .IsRequired()
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Text)
                 .IsRequired()
                 .HasMaxLength(250);
@@ -55,17 +46,7 @@ public partial class DB_SocialContext : DbContext
         {
             entity.ToTable("Follow");
 
-            entity.Property(e => e.Id)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.FollowingId)
-                .IsRequired()
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.PageId)
-                .IsRequired()
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.Following).WithMany(p => p.FollowFollowings)
                 .HasForeignKey(d => d.FollowingId)
@@ -80,13 +61,7 @@ public partial class DB_SocialContext : DbContext
 
         modelBuilder.Entity<Page>(entity =>
         {
-            entity.Property(e => e.Id)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.UserId)
-                .IsRequired()
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.User).WithMany(p => p.Pages)
                 .HasForeignKey(d => d.UserId)
@@ -96,19 +71,13 @@ public partial class DB_SocialContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.Property(e => e.Id)
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Caption)
                 .IsRequired()
                 .HasMaxLength(250);
             entity.Property(e => e.MediaLink)
                 .IsRequired()
                 .HasMaxLength(150)
-                .IsFixedLength();
-            entity.Property(e => e.PageId)
-                .IsRequired()
-                .HasMaxLength(10)
                 .IsFixedLength();
 
             entity.HasOne(d => d.Page).WithMany(p => p.Posts)
@@ -119,9 +88,7 @@ public partial class DB_SocialContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Id)
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Fullname)
                 .IsRequired()
                 .HasMaxLength(50);

@@ -117,7 +117,7 @@ namespace SocialMedia.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id) // delete from User where id == id => ActionResult
+        public async Task<IActionResult> DeleteUser(int id) // delete from User where id == id => ActionResult 
         {
             if (_context.Users == null)
             {

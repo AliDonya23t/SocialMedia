@@ -34,7 +34,7 @@ namespace SocialMedia.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id) // select * from users where id == id => User
+        public async Task<ActionResult<User>> GetUser(int id) // select * from users where id == id => User
         { // checked and updated as show only active users
             if (_context.Users == null)
             {

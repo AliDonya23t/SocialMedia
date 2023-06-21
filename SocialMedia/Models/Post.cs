@@ -7,13 +7,11 @@ namespace SocialMedia.Models;
 
 public partial class Post
 {
-    public int Id { get; set; }
+    public int id { get; set; }
 
     public string MediaLink { get; set; }
 
     public string Caption { get; set; }
-
-    public bool Is_Active { get; set; }
 
     public int PageId { get; set; }
 

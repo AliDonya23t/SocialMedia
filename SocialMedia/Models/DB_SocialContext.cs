@@ -27,6 +27,8 @@ public partial class DB_SocialContext : DbContext
     {
         modelBuilder.Entity<Comment>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_Comments_1");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Text)
                 .IsRequired()
@@ -34,7 +36,7 @@ public partial class DB_SocialContext : DbContext
 
             entity.HasOne(d => d.IdParentNavigation).WithMany(p => p.InverseIdParentNavigation)
                 .HasForeignKey(d => d.IdParent)
-                .HasConstraintName("FK_Comments_Comments");
+                .HasConstraintName("FK_Comments_Comments1");
 
             entity.HasOne(d => d.IdPostNavigation).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.IdPost)
@@ -46,10 +48,10 @@ public partial class DB_SocialContext : DbContext
         {
             entity.ToTable("Follow");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Following).WithMany(p => p.FollowFollowings)
-                .HasForeignKey(d => d.FollowingId)
+            entity.HasOne(d => d.FollowingldNavigation).WithMany(p => p.FollowFollowingldNavigations)
+                .HasForeignKey(d => d.Followingld)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Follow_Pages1");
 
@@ -61,7 +63,7 @@ public partial class DB_SocialContext : DbContext
 
         modelBuilder.Entity<Page>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.id).ValueGeneratedNever();
 
             entity.HasOne(d => d.User).WithMany(p => p.Pages)
                 .HasForeignKey(d => d.UserId)
@@ -71,10 +73,10 @@ public partial class DB_SocialContext : DbContext
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Caption)
-                .IsRequired()
-                .HasMaxLength(250);
+            entity.HasKey(e => e.id).HasName("PK_Comments");
+
+            entity.Property(e => e.id).ValueGeneratedNever();
+            entity.Property(e => e.Caption).HasMaxLength(250);
             entity.Property(e => e.MediaLink)
                 .IsRequired()
                 .HasMaxLength(150)
@@ -88,7 +90,9 @@ public partial class DB_SocialContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.HasKey(e => e.id).HasName("PK_User");
+
+            entity.Property(e => e.id).ValueGeneratedNever();
             entity.Property(e => e.Fullname)
                 .IsRequired()
                 .HasMaxLength(50);

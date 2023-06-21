@@ -7,13 +7,13 @@ namespace SocialMedia.Models;
 
 public partial class Page
 {
-    public int Id { get; set; }
+    public int id { get; set; }
 
     public int UserId { get; set; }
 
     public bool Is_Active { get; set; }
 
-    public virtual ICollection<Follow> FollowFollowings { get; set; } = new List<Follow>();
+    public virtual ICollection<Follow> FollowFollowingldNavigations { get; set; } = new List<Follow>();
 
     public virtual ICollection<Follow> FollowPages { get; set; } = new List<Follow>();
 

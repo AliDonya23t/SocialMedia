@@ -54,7 +54,7 @@ namespace SocialMedia.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFollow(int id, Follow follow)
         {
-            if (id != follow.Id)
+            if (id != follow.id)
             {
                 return BadRequest();
             }
@@ -96,7 +96,7 @@ namespace SocialMedia.Controllers
             }
             catch (DbUpdateException)
             {
-                if (FollowExists(follow.Id))
+                if (FollowExists(follow.id))
                 {
                     return Conflict();
                 }
@@ -106,7 +106,7 @@ namespace SocialMedia.Controllers
                 }
             }
 
-            return CreatedAtAction("GetFollow", new { id = follow.Id }, follow);
+            return CreatedAtAction("GetFollow", new { id = follow.id }, follow);
         }
 
         // DELETE: api/Follows/5
@@ -131,7 +131,7 @@ namespace SocialMedia.Controllers
 
         private bool FollowExists(int id)
         {
-            return (_context.Follows?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Follows?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

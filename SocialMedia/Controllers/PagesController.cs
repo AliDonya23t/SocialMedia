@@ -54,7 +54,7 @@ namespace SocialMedia.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPage(int id, Page page)
         {
-            if (id != page.Id)
+            if (id != page.id)
             {
                 return BadRequest();
             }
@@ -96,7 +96,7 @@ namespace SocialMedia.Controllers
             }
             catch (DbUpdateException)
             {
-                if (PageExists(page.Id))
+                if (PageExists(page.id))
                 {
                     return Conflict();
                 }
@@ -106,7 +106,7 @@ namespace SocialMedia.Controllers
                 }
             }
 
-            return CreatedAtAction("GetPage", new { id = page.Id }, page);
+            return CreatedAtAction("GetPage", new { id = page.id }, page);
         }
 
         // DELETE: api/Pages/5
@@ -131,7 +131,7 @@ namespace SocialMedia.Controllers
 
         private bool PageExists(int id)
         {
-            return (_context.Pages?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Pages?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

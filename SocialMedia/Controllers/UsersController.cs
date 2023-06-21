@@ -59,7 +59,7 @@ namespace SocialMedia.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, User user) // Update Users set * = * where user.id == id => ActionResult
         {// checked no update needed
-            if (id != user.Id)
+            if (id != user.id)
             {
                 return BadRequest();
             }
@@ -102,7 +102,7 @@ namespace SocialMedia.Controllers
             }
             catch (DbUpdateException)
             {
-                if (UserExists(user.Id))
+                if (UserExists(user.id))
                 {
                     return Conflict();
                 }
@@ -112,7 +112,7 @@ namespace SocialMedia.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", new { id = user.id }, user);
         }
 
         // DELETE: api/Users/5
@@ -123,7 +123,7 @@ namespace SocialMedia.Controllers
             {
                 return NotFound();
             }
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.id == id);
             if (user == null)
                 return NotFound();
             else
@@ -170,7 +170,7 @@ namespace SocialMedia.Controllers
 
         private bool UserExists(int id)
         {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

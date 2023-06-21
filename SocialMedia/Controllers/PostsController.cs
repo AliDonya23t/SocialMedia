@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -24,10 +25,11 @@ namespace SocialMedia.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
-          if (_context.Posts == null)
-          {
-              return NotFound();
-          }
+            if (_context.Posts == null)
+            {
+                return NotFound();
+            }
+
             return await _context.Posts.ToListAsync();
         }
 
@@ -54,7 +56,7 @@ namespace SocialMedia.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPost(int id, Post post)
         {
-            if (id != post.Id)
+            if (id != post.id)
             {
                 return BadRequest();
             }
@@ -96,7 +98,7 @@ namespace SocialMedia.Controllers
             }
             catch (DbUpdateException)
             {
-                if (PostExists(post.Id))
+                if (PostExists(post.id))
                 {
                     return Conflict();
                 }
@@ -106,7 +108,7 @@ namespace SocialMedia.Controllers
                 }
             }
 
-            return CreatedAtAction("GetPost", new { id = post.Id }, post);
+            return CreatedAtAction("GetPost", new { id = post.id }, post);
         }
 
         // DELETE: api/Posts/5
@@ -128,10 +130,10 @@ namespace SocialMedia.Controllers
 
             return NoContent();
         }
-
+        
         private bool PostExists(int id)
         {
-            return (_context.Posts?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Posts?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

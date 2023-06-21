@@ -60,6 +60,11 @@ namespace SocialMedia.Controllers
             }
 
             _context.Entry(comment).State = EntityState.Modified;
+            var commentIdPost = await _context.Comments.FindAsync(id);
+            if (comment.IdPost != commentIdPost.IdPost)
+            {
+                return Problem("Id post can not change.");
+            }
 
             try
             {
@@ -89,6 +94,15 @@ namespace SocialMedia.Controllers
           {
               return Problem("Entity set 'DB_SocialContext.Comments'  is null.");
           }
+            var parent = await _context.Comments.FindAsync(comment.IdParent);
+            if (parent == null)
+            {
+                return NoContent();
+            }
+            if (comment.IdPost != parent.IdPost)
+            {
+              return Problem("Id post should match with the parent.");
+            }
             _context.Comments.Add(comment);
             try
             {
